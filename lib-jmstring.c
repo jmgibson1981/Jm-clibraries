@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright <2023> <Jason Gibson>
 
 This program is free software: you can redistribute it and/or modify it under
@@ -19,7 +19,15 @@ with this program. If not, see <https://www.gnu.org/licenses/>.
 #include <stdlib.h>
 #include <ctype.h>
 
+#ifdef __linux__
+
+#include <lib-jmstring.h>
+
+#else
+
 #include "lib-jmstring.h"
+
+#endif
 
 /*
   This will determine if any characters in string are digits

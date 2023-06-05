@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright <2023> <Jason Gibson>
 
 This program is free software: you can redistribute it and/or modify it under
@@ -22,7 +22,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>.
 
 void clear_stdout(void);
 
-char * prompt_scan_f(char * prompt, int a);
+char * prompt_input(char * prompt, int a, char * type);
 
 bool valid_input(char * str);
 
@@ -35,5 +35,7 @@ void char_flip(char * a, char * b);
 void int_flip(int * a, int * b);
 
 void float_flip(float * a, float * b);
+
+void prompt_fail(int a);
 
 #endif // libjmgeneral

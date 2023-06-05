@@ -20,8 +20,17 @@ with this program. If not, see <https://www.gnu.org/licenses/>.
 #include <string.h>
 #include <time.h>
 
+#ifdef __linux__
+
+#include <lib-jmgeneral.h>
+#include <lib-jmstring.h>
+
+#else
+
 #include "lib-jmgeneral.h"
 #include "lib-jmstring.h"
+
+#endif
 
 /*
   clear terminal output
@@ -45,15 +54,32 @@ void clear_stdout()
     a = size of buffer
 */
 
-char * prompt_scan_f(char * prompt, int a) // working
+char * prompt_input(char * prompt, int a, char * type) // working
 {
   // declare & initialize
   char temp[a];
-  char * retval = NULL;
-
-  printf("%s --> ", prompt);
-  scanf("%s", temp);
-  retval = allocate_string_mem(temp);
+	char * test = NULL;
+  
+  if (!string_is_valid("fgets", type) &&
+      !string_is_valid("scanf", type)) {
+  	prompt_fail(998);
+  }
+  
+  
+  printf("%s -> ", prompt);
+  if (string_is_valid("fgets", type)) {
+  	if ((test = fgets(temp, a, stdin) == NULL)) {
+			prompt_fail(999);
+		}
+	} else if (string_is_valid("scanf", type)) {
+		if ((test = scanf("%s", temp) == NULL)) {
+  		prompt_fail(999);
+ 		}
+ 	}
+  
+  // clean up and set return pointer
+  test = NULL;
+  char * retval = allocate_string_mem(temp);
 
   return(retval);
 }
@@ -195,4 +221,10 @@ void float_flip(float * a, float * b)
   temp = *a;
   *a = *b;
   *b = temp;
+}
+
+void prompt_fail(int a)
+{
+	printf("failed to get input. exiting with code %d\n");
+	exit(1);
 }

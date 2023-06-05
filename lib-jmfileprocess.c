@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright <2023> <Jason Gibson>
 
 This program is free software: you can redistribute it and/or modify it under
@@ -18,9 +18,20 @@ with this program. If not, see <https://www.gnu.org/licenses/>.
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
+#ifdef __linux__
+
 #include <lib-jmfileprocess.h>
 #include <lib-jmstring.h>
 #include <lib-jmgeneral.h>
+
+#else
+
+#include "lib-jmfileprocess.h"
+#include "lib-jmgeneral.h"
+#include "lib-jmstring.h"
+
+#endif
 
 /*
   USAGE :
