@@ -1,0 +1,12 @@
+﻿Expected coding format as follows
+
+1. Tabs = 2 spaces. Use space instead of Tab character.
+2. Separate smaller blocks with a blank line.
+3. Well commented. If you wish to submit a pull request make sure your username is
+	 in your comments somewhere so you can maintain direct credit visibly in your 
+     submitted code.
+4. I welcome simplications and constructive criticism. Don't be an ass about it though.
+
+Thus far my contributions are from my personal learning process and coming up with
+things that I can see being useful to myself. As they are LGPL please do what you wish
+with them as long as the license terms are followed.
