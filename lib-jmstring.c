@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright <2023> <Jason Gibson>
 
 This program is free software: you can redistribute it and/or modify it under
@@ -18,6 +18,8 @@ with this program. If not, see <https://www.gnu.org/licenses/>.
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+
+#define LIBNAME "lib-jmstring.c"
 
 #ifdef __linux__
 
@@ -187,6 +189,10 @@ bool string_is_valid(char * str, char * strexpect)
 
 bool string_valid_dollar(char * dollar)
 {
+	// sanity check
+	if (dollar == NULL) {
+		prompt_fail(LIBNAME, "string_valid_dollar", "NULL.dollar.PTR");
+	}
   // declare & initialize
   bool decimal = false;
   bool digits = true;

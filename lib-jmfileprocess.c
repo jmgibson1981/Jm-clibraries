@@ -19,6 +19,8 @@ with this program. If not, see <https://www.gnu.org/licenses/>.
 #include <string.h>
 #include <stdlib.h>
 
+#define LIBNAME "jm-libfileprocess.c"
+
 #ifdef __linux__
 
 #include <lib-jmfileprocess.h>
@@ -54,6 +56,19 @@ with this program. If not, see <https://www.gnu.org/licenses/>.
 char * file_search_func(FILE * file, const char * searchstr,
                       const char * delimiter, const int field) // working
 {
+	// sanity checks
+	if (file == NULL) {
+		prompt_fail(LIBNAME, "file_search_func", "NULL.file.PTR");
+	}
+	
+	if (searchstr == NULL) {
+		prompt_fail(LIBNAME, "file_search_func", "NULL.searchstr.PTR");
+	}
+	
+	if (delimiter == NULL) {
+		prompt_fail(LIBNAME, "file_search_func", "NULL.delimiter.PTR");
+	}
+	
   // declare and initialize
   char * token = NULL;
   char * loopret = NULL;
@@ -84,9 +99,13 @@ char * file_search_func(FILE * file, const char * searchstr,
             token = strtok(NULL, delimiter);
           }
         }
+      } else {
+      	prompt_fail(LIBNAME, "file_search_func", "STRSTR.FAIL");
       }
+    } else {
+    	prompt_fail(LIBNAME, "file_search_func", "FGETS.FAIL");
     }
-
+    
     if (feof(file) &&
         retval == NULL) {
       rewind(file);
@@ -97,8 +116,12 @@ char * file_search_func(FILE * file, const char * searchstr,
   // reset file to beginning and set return value
   rewind(file);
   retval = allocate_string_mem(loopret);
+  
+  if (retval == NULL) {
+  	prompt_fail(LIBNAME, "file_search_func", "ALLOC.retval.FAIL");
+  }
 
-  // check valid to return
+  // clean up and return
   loopret = NULL;
   token = NULL;
   return(retval);
@@ -138,6 +161,11 @@ int file_num_lines(FILE * file) // working
 
 void file_reverse_output(FILE * file, FILE * newfile, int buffer)
 {
+	// sanity check
+	if (file == NULL) {
+		prompt_fail(LIBNAME, "file_reverse_output", "NULL.file.PTR");
+	}
+	
   // declare and initialize
   int lines = file_num_lines(file);
   char buf[lines][buffer];
@@ -147,8 +175,7 @@ void file_reverse_output(FILE * file, FILE * newfile, int buffer)
   for (int i = lines; i > 0; i--) {
     char * ptr = fgets(str, buffer, file);
     if (!ptr) {
-      printf("error on line %d. check file contents.\n", i);
-      exit(1);
+      prompt_fail(LIBNAME, "file_reverse_output", "FGETS.FAIL");
     }
 
     strcpy(buf[i], ptr);
@@ -182,6 +209,15 @@ void file_reverse_output(FILE * file, FILE * newfile, int buffer)
 
 int highest_integer_column(FILE * file, char * delimiter, int field)
 {
+	// sanity check
+	if (file == NULL) {
+		prompt_fail(LIBNAME, "highest_integer_column", "NULL.file.PTR");
+	}
+	
+	if (delimiter == NULL) {
+		prompt_fail(LIBNAME, "highest_integer_column", "NULL.delimiter.PTR");
+	}
+		
   // declare & initialize
   char buffer[256];
   char * token = NULL;

@@ -22,7 +22,11 @@ with this program. If not, see <https://www.gnu.org/licenses/>.
 
 void clear_stdout(void);
 
-char * prompt_input(char * prompt, int a, char * type);
+char * prompt_input_fgets(char * prompt, int a);
+
+char * prompt_input_scanf(char * prompt, int a);
+
+void prompt_print(char * prompt);
 
 bool valid_input(char * str);
 
@@ -36,6 +40,6 @@ void int_flip(int * a, int * b);
 
 void float_flip(float * a, float * b);
 
-void prompt_fail(int a);
+void prompt_fail(char * fail, char * func, char * error);
 
 #endif // libjmgeneral

@@ -20,6 +20,8 @@ with this program. If not, see <https://www.gnu.org/licenses/>.
 #include <string.h>
 #include <time.h>
 
+#define LIBNAME "lib-jmgeneral.c"
+
 #ifdef __linux__
 
 #include <lib-jmgeneral.h>
@@ -40,11 +42,11 @@ void clear_stdout()
 {
   #ifdef _WIN32
   system("cls");
-  #endif // _WIN32
-
+  #endif
+  
   #ifdef __linux__
   printf("\e[1;1H\e[2J");
-  #endif // __linux__
+  #endif
 }
 
 /*
@@ -53,35 +55,52 @@ void clear_stdout()
     prompt = message for prompt
     a = size of buffer
 */
+  
+char * prompt_input_fgets(char * prompt, int a)
+{
+	char temp[a];
+	char * test = NULL;
+	
+	prompt_print(prompt);
+	if ((test = fgets(temp, a, stdin) == NULL)) {
+		prompt_fail(LIBNAME, "prompt_input_fgets", "NULL.test.PTR");
+	}
 
-char * prompt_input(char * prompt, int a, char * type) // working
+	// clean up and set return pointer	
+	test = NULL;
+	char * retval = allocate_string_mem(temp);
+	
+	return(retval);
+}
+
+/*
+  prompt for multi string input with variable message
+  ARGS:
+    prompt = message for prompt
+    a = size of buffer
+*/
+	
+char * prompt_input_scanf(char * prompt, int a) // working
 {
   // declare & initialize
   char temp[a];
 	char * test = NULL;
   
-  if (!string_is_valid("fgets", type) &&
-      !string_is_valid("scanf", type)) {
-  	prompt_fail(998);
-  }
-  
-  
-  printf("%s -> ", prompt);
-  if (string_is_valid("fgets", type)) {
-  	if ((test = fgets(temp, a, stdin) == NULL)) {
-			prompt_fail(999);
-		}
-	} else if (string_is_valid("scanf", type)) {
-		if ((test = scanf("%s", temp) == NULL)) {
-  		prompt_fail(999);
- 		}
+  prompt_print(prompt);
+  if ((test = scanf("%s", temp) == NULL)) {
+  	prompt_fail(LIBNAME, "prompt_input_scanf", "NULL.test.PTR");
  	}
-  
+ 
   // clean up and set return pointer
   test = NULL;
   char * retval = allocate_string_mem(temp);
-
+ 	
   return(retval);
+}
+
+void prompt_print(char * prompt)
+{
+	printf("%s --> ", prompt);
 }
 
 /*
@@ -95,7 +114,7 @@ bool valid_input(char * str) // working
   bool retval = false;
 
   // prompt + verify input. if (y) return true
-  printf("you entered %s. is this correct? (y|n) --> ", str);
+  printf("you entered %s. is this correct? (y|n)", str);
   scanf(" %c", &temp);
   if (temp == 'y') {
     retval = true;
@@ -110,7 +129,8 @@ char * home_file_paths(char * name, char * type)
 {
   char * retval = NULL;
   // valid to run function
-  if (name != NULL && string_is_valid(type, "local")) {
+  if (name != NULL &&
+      string_is_valid(type, "local")) {
 
     // length of paths for buffer allocation
     int pathlen = strlen(name);
@@ -223,8 +243,8 @@ void float_flip(float * a, float * b)
   *b = temp;
 }
 
-void prompt_fail(int a)
+void prompt_fail(char * fail, char * func, char * error)
 {
-	printf("failed to get input. exiting with code %d\n");
+	printf("error - %s<>%s<>%s\n", fail, func, error);
 	exit(1);
 }
