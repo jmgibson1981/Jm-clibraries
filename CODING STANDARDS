@@ -1,11 +1,21 @@
 ﻿Expected coding format as follows
 
-1. Tabs = 2 spaces. Use space instead of Tab character.
-2. Separate smaller blocks with a blank line.
-3. Well commented. If you wish to submit a pull request make sure your username is
+1. tabs = 2 spaces. Use space instead of Tab character.
+
+2. separate smaller blocks with a blank line.
+
+3. well commented. If you wish to submit a pull request make sure your username is
    in your comments somewhere so you can maintain direct credit visibly in your 
    submitted code.
-4. I welcome simplications and constructive criticism. Don't be an ass about it though.
+   
+4. Error handling. To utilize the built in prompt_fail function.
+   a. global in given source file - #define LIBNAME filename.c
+   b. call with meaningful message. name of file, function, short description of problem.
+      the more specific the better. test everything and prompt fail it as needed.
+      example - prompt_fail(LIBNAME, "random_func", "NULL.file.PTR");
+      this function is found in the lib-jmgeneral.h header.
+
+I welcome simplications and constructive criticism. Don't be an ass about it though.
 
 Thus far my contributions are from my personal learning process and coming up with
 things that I can see being useful to myself. As they are LGPL please do what you wish
