@@ -25,12 +25,10 @@ with this program. If not, see <https://www.gnu.org/licenses/>.
 #ifdef __linux__
 
 #include <lib-jmgeneral.h>
-#include <lib-jmstring.h>
 
 #else
 
 #include "lib-jmgeneral.h"
-#include "lib-jmstring.h"
 
 #endif
 
@@ -43,7 +41,7 @@ void clear_stdout()
   #ifdef _WIN32
   system("cls");
   #endif
-  
+
   #ifdef __linux__
   printf("\e[1;1H\e[2J");
   #endif
@@ -55,21 +53,22 @@ void clear_stdout()
     prompt = message for prompt
     a = size of buffer
 */
-  
+
 char * prompt_input_fgets(char * prompt, int a)
 {
 	char temp[a];
 	char * test = NULL;
-	
+
 	prompt_print(prompt);
-	if ((test = fgets(temp, a, stdin) == NULL)) {
+	test = fgets(temp, a, stdin);
+	if (test == NULL) {
 		prompt_fail(LIBNAME, "prompt_input_fgets", "NULL.test.PTR");
 	}
 
-	// clean up and set return pointer	
+	// clean up and set return pointer
 	test = NULL;
 	char * retval = allocate_string_mem(temp);
-	
+
 	return(retval);
 }
 
@@ -79,22 +78,18 @@ char * prompt_input_fgets(char * prompt, int a)
     prompt = message for prompt
     a = size of buffer
 */
-	
+
 char * prompt_input_scanf(char * prompt, int a) // working
 {
   // declare & initialize
   char temp[a];
-	char * test = NULL;
-  
+
   prompt_print(prompt);
-  if ((test = scanf("%s", temp) == NULL)) {
-  	prompt_fail(LIBNAME, "prompt_input_scanf", "NULL.test.PTR");
- 	}
- 
-  // clean up and set return pointer
-  test = NULL;
+  scanf("%s", temp);
+
+  // set return pointer
   char * retval = allocate_string_mem(temp);
- 	
+
   return(retval);
 }
 
@@ -136,32 +131,32 @@ char * home_file_paths(char * name, char * type)
     int pathlen = strlen(name);
 
     #ifdef __linux__
-    
+
     int homelen = strlen(getenv("HOME"));
-    
+
     #endif
 
     #ifdef _WIN32
-    
+
     int homelen = strlen(getenv("USERPROFILE"));
-    
+
     #endif
 
     char * buffer = (char*)malloc((homelen + pathlen) * sizeof(char));
 
     // load buffer and return
     #ifdef __linux__
-    
+
     strcpy(buffer, getenv("HOME"));
-  
+
   	#endif
 
     #ifdef _WIN32
-    
+
     strcpy(buffer, getenv("USERPROFILE"));
-    
+
     #endif
-    
+
     strcat(buffer, name);
     retval = buffer;
   }
@@ -179,22 +174,22 @@ char * home_file_paths(char * name, char * type)
 */
 
 int random_gen(int low, int high)
-{ 
+{
   // declare & initialize
   int retval = 0;
-  
+
   do {
     #ifdef __linux__
-    
+
     #include <sodium.h>
     retval = randombytes_uniform(high);
-    
+
     #else
-    
+
     time_t t;
     srand((unsigned) time(&t));
     retval = rand() % high;
-    
+
     #endif
   } while (retval < low);
 
@@ -245,6 +240,6 @@ void float_flip(float * a, float * b)
 
 void prompt_fail(char * fail, char * func, char * error)
 {
-	printf("error - %s<>%s<>%s\n", fail, func, error);
+	printf("error: %s:%s_%s\n", fail, func, error);
 	exit(1);
 }

@@ -19,19 +19,15 @@ with this program. If not, see <https://www.gnu.org/licenses/>.
 #include <string.h>
 #include <stdlib.h>
 
-#define LIBNAME "jm-libfileprocess.c"
+#define LIBNAME "lib-jmfileprocess.c"
 
 #ifdef __linux__
 
-#include <lib-jmfileprocess.h>
-#include <lib-jmstring.h>
 #include <lib-jmgeneral.h>
 
 #else
 
-#include "lib-jmfileprocess.h"
 #include "lib-jmgeneral.h"
-#include "lib-jmstring.h"
 
 #endif
 
@@ -60,15 +56,15 @@ char * file_search_func(FILE * file, const char * searchstr,
 	if (file == NULL) {
 		prompt_fail(LIBNAME, "file_search_func", "NULL.file.PTR");
 	}
-	
+
 	if (searchstr == NULL) {
 		prompt_fail(LIBNAME, "file_search_func", "NULL.searchstr.PTR");
 	}
-	
+
 	if (delimiter == NULL) {
 		prompt_fail(LIBNAME, "file_search_func", "NULL.delimiter.PTR");
 	}
-	
+
   // declare and initialize
   char * token = NULL;
   char * loopret = NULL;
@@ -105,7 +101,7 @@ char * file_search_func(FILE * file, const char * searchstr,
     } else {
     	prompt_fail(LIBNAME, "file_search_func", "FGETS.FAIL");
     }
-    
+
     if (feof(file) &&
         retval == NULL) {
       rewind(file);
@@ -116,7 +112,7 @@ char * file_search_func(FILE * file, const char * searchstr,
   // reset file to beginning and set return value
   rewind(file);
   retval = allocate_string_mem(loopret);
-  
+
   if (retval == NULL) {
   	prompt_fail(LIBNAME, "file_search_func", "ALLOC.retval.FAIL");
   }
@@ -165,7 +161,7 @@ void file_reverse_output(FILE * file, FILE * newfile, int buffer)
 	if (file == NULL) {
 		prompt_fail(LIBNAME, "file_reverse_output", "NULL.file.PTR");
 	}
-	
+
   // declare and initialize
   int lines = file_num_lines(file);
   char buf[lines][buffer];
@@ -213,11 +209,11 @@ int highest_integer_column(FILE * file, char * delimiter, int field)
 	if (file == NULL) {
 		prompt_fail(LIBNAME, "highest_integer_column", "NULL.file.PTR");
 	}
-	
+
 	if (delimiter == NULL) {
 		prompt_fail(LIBNAME, "highest_integer_column", "NULL.delimiter.PTR");
 	}
-		
+
   // declare & initialize
   char buffer[256];
   char * token = NULL;

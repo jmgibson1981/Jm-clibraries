@@ -42,4 +42,37 @@ void float_flip(float * a, float * b);
 
 void prompt_fail(char * fail, char * func, char * error);
 
+// lib-jmstring
+
+bool string_has_digits(const char * str);
+
+bool string_has_alpha(const char * str);
+
+bool string_has_punct(const char * str);
+
+bool string_has_space(const char * str);
+
+void string_flipper(char * str);
+
+void no_more_newline(char * str);
+
+bool string_is_valid(char * str, char * strexpect);
+
+bool string_valid_dollar(char * dollar);
+
+char * allocate_string_mem(char * str);
+
+// lib-jmfileprocess
+
+char * file_search_func(FILE * file, const char * searchstr,
+                        const char * delimiter, const int field);
+
+int file_num_lines(FILE * file);
+
+void file_reverse_output(FILE * file, FILE * newfile, int buffer);
+
+int highest_integer_column(FILE * file, char * delimiter, int field);
+
+void file_null_check(FILE * file);
+
 #endif // libjmgeneral

@@ -23,7 +23,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>.
 
 #ifdef __linux__
 
-#include <lib-jmstring.h>
+#include <lib-jmgeneral.h>
 
 #else
 
@@ -44,14 +44,14 @@ bool string_has_digits(const char * str)
 {
 	// declare & initialize
   bool retval = false;
-  
+
   for (int i = 0; i <= strlen(str); i++) {
     if (isdigit(str[i])) {
       retval = true;
       break;
     }
   }
-  
+
   return(retval);
 }
 
@@ -68,14 +68,14 @@ bool string_has_alpha(const char * str)
 {
 	// declare & initialize
   bool retval = false;
-  
+
   for (int i = 0; i <= strlen(str); i++) {
     if (isalpha(str[i])) {
       retval = true;
       break;
     }
   }
-  
+
   return(retval);
 }
 
@@ -92,14 +92,14 @@ bool string_has_punct(const char * str)
 {
 	// declare & initialize
   bool retval = false;
-  
+
   for (int i = 0; i <= strlen(str); i++) {
     if (ispunct(str[i])) {
       retval = true;
       break;
     }
   }
-  
+
   return(retval);
 }
 
@@ -117,14 +117,14 @@ bool string_has_space(const char * str)
 {
 	// declare & initialize
   bool retval = false;
-  
+
   for (int i = 0; i <= strlen(str); i++) {
     if (strchr(str, ' ')) {
       retval = true;
       break;
     }
   }
-  
+
   return(retval);
 }
 
@@ -248,7 +248,7 @@ bool string_valid_dollar(char * dollar)
 
     retval = true;
   }
-  
+
   return(retval);
 }
 
