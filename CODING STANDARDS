@@ -6,7 +6,8 @@
 
 3. well commented. If you wish to submit a pull request make sure your username is
    in your comments somewhere so you can maintain direct credit visibly in your 
-   submitted code.
+   submitted code. i admit i may do some minor formatting but have no intention of
+   rebuilding peoples code to claim it my own.
    
 4. Error handling. To utilize the built in prompt_fail function.
    a. global in given source file - #define LIBNAME filename.c
