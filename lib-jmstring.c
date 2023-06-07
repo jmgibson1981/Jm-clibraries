@@ -23,11 +23,11 @@ with this program. If not, see <https://www.gnu.org/licenses/>.
 
 #ifdef __linux__
 
-#include <lib-jmgeneral.h>
+#include "lib-jmgeneral.h"
 
 #else
 
-#include "lib-jmstring.h"
+#include "lib-jmgeneral.h"
 
 #endif
 
